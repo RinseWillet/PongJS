@@ -10,6 +10,8 @@ canvas.width = width;
 canvas.height = height;
 var context = canvas.getContext('2d');
 
+
+
 window.onload = function() {
     document.body.appendChild(canvas);
     animate(step);
@@ -21,14 +23,7 @@ var step = function() {
     animate(step);
 };
 
-var update = function(){
-};
-
-var render = function() {
-    context.fillStyle = "#000000";
-    context.fillRect(0, 0, width, height);
-};
-
+//creating the paddles
 function Paddle (x,y, width, height) {
     this.x = x;
     this.y = y;
@@ -36,6 +31,7 @@ function Paddle (x,y, width, height) {
     this.height = height;
     this.x_speed = 0;
     this.y_speed = 0;
+    this.score= 0;
 }
 
 Paddle.prototype.render = function() {
@@ -45,11 +41,13 @@ Paddle.prototype.render = function() {
 
 function Player() {
     this.paddle = new Paddle (580, 175, 10, 50);
+    this.score = this.paddle.score
 }
 
 function Computer() {
     this.paddle = new Paddle (10, 175, 10, 50);
-}
+    this.score = this.paddle.score
+   }
 
 Player.prototype.render = function(){
     this.paddle.render();
@@ -59,6 +57,7 @@ Computer.prototype.render = function(){
     this.paddle.render();
 };
 
+//creating the ball
 function Ball (x,y) {
     this.x = x;
     this.y = y;
@@ -78,9 +77,27 @@ var player = new Player();
 var computer = new Computer();
 var ball = new Ball(300, 200);
 
+
 var render = function() {
     context.fillStyle = "#000000";
     context.fillRect(0,0, width, height);
+    
+    // Draw the net (Line in the middle)
+    context.beginPath();
+    context.setLineDash([7, 15]);
+    context.moveTo(300, 0);
+    context.lineTo(300, 400);
+    context.lineWidth = 5;
+    context.strokeStyle = "#ffffff";
+
+    // //printing scores
+    context.font = "30px Comic Sans MS";
+    context.fillStyle = "white";
+    context.textAlign = "center";
+    context.fillText(player.score.toString(), 150, 40);
+    context.fillText(computer.score.toString(), 450, 40);
+
+    context.stroke();
     player.render();
     computer.render();
     ball.render();
@@ -101,17 +118,34 @@ Ball.prototype.update = function(paddle1, paddle2) {
     if(this.y -5 < 0) { // bouncing of the top wall - bovenmuur raken
         this.y = 5;
         this.y_speed = -this.y_speed;
+        beep(300);
     } else if(this.y + 5 > 400) { // bouncing of the bottom wall - rechtermuur raken
             this.y = 395;
             this.y_speed = -this.y_speed;
+            beep(300);
     }
 
-    if(this.x < 0 || this.x > 600) {   //scoring a point - punt scoren
+//volume of the tone. Default is 1, off is 0.
+//type of tone. Possible values are sine, square, sawtooth, triangle, and custom. Default is sine.
+//callback to use on end of tone
+//function beep(frequency, volume, type, callback) {
+
+//scoring a point - punt scoren - ball reset
+ 
+    if(this.x < 0 || this.x > 600){
         this.y_speed = 0;
-        this.x_speed = 3;
+        this.x_speed = 5;
         this.y = 200;
         this.x = 300;
+        beep(600, 1, 'triangle');        
+        if(this.x < 0){
+            player.score += 1;
+        }
+        if(this.x > 600){
+            computer.score += 1;
+        }
     }
+// Hit detection - ball to paddle
 
     if(top_x > 300) {
         if(top_x < (paddle1.x + paddle1.width) && bottom_x > paddle1.x && top_y < (paddle1.y + paddle1.height) && bottom_y > paddle1.y) {
@@ -119,6 +153,7 @@ Ball.prototype.update = function(paddle1, paddle2) {
             this.x_speed = -3;
             this.y_speed += (paddle1.y_speed / 2);
             this.x += this.y_speed;
+            beep(200);
         }
     } else {
         if(top_x < (paddle2.x + paddle2.width) && bottom_x > paddle2.x && top_y < (paddle2.y + paddle2.height) && bottom_y > paddle2.y) {
@@ -126,11 +161,13 @@ Ball.prototype.update = function(paddle1, paddle2) {
             this.x_speed = 3;
             this.y_speed += (paddle2.y_speed / 2);
             this.x += this.x_speed;
+            beep(200);
+
         }   
     }
 };
 
-//controls
+//Controls - input and conversion to movement Player
 
 var keysDown ={};
 
@@ -196,6 +233,30 @@ Computer.prototype.update = function(ball) {
     } else if(this.paddle.y + this.paddle.height > 600) {
         this.paddle.y = 600 - this.paddle.height;
     }
+};
+
+//Sound context - if you use another AudioContext class use that one, as some browsers have a limit
+var audioCtx = new (window.AudioContext || window.webkitAudioContext || window.audioContext);
+
+//Synthesizer for sound (beeps):
+
+//duration is set at 100 ms
+//frequency of the tone in hertz. default is 440
+//volume of the tone. Default is 1, off is 0.
+//type of tone. Possible values are sine, square, sawtooth, triangle, and custom. Default is sine.
+function beep(frequency, volume, type) {
+    var oscillator = audioCtx.createOscillator();
+    var gainNode = audioCtx.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    if (volume){gainNode.gain.value = volume;}
+    if (frequency){oscillator.frequency.value = frequency;}
+    if (type){oscillator.type = type;}   
+
+    oscillator.start(audioCtx.currentTime);
+    oscillator.stop(audioCtx.currentTime + ((100) / 1000));
 };
 
 
