@@ -13,3 +13,4 @@ the game has been turned 90 degrees and colors matched to conform to classic 197
 
 to do:
 - create reset / start button
+- style html file further
