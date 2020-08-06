@@ -11,7 +11,6 @@ canvas.height = height;
 var context = canvas.getContext('2d');
 
 
-
 window.onload = function() {
     document.body.appendChild(canvas);
     animate(step);
@@ -89,7 +88,8 @@ var render = function() {
     context.lineTo(300, 400);
     context.lineWidth = 5;
     context.strokeStyle = "#ffffff";
-
+    context.stroke();
+    
     // //printing scores
     context.font = "30px Comic Sans MS";
     context.fillStyle = "white";
@@ -97,7 +97,6 @@ var render = function() {
     context.fillText(player.score.toString(), 150, 40);
     context.fillText(computer.score.toString(), 450, 40);
 
-    context.stroke();
     player.render();
     computer.render();
     ball.render();
@@ -133,17 +132,17 @@ Ball.prototype.update = function(paddle1, paddle2) {
 //scoring a point - punt scoren - ball reset
  
     if(this.x < 0 || this.x > 600){
+        if(this.x < 0){
+            computer.score += 1;
+        }
+        if(this.x > 600){
+            player.score += 1;
+        }
         this.y_speed = 0;
         this.x_speed = 5;
         this.y = 200;
         this.x = 300;
-        beep(600, 1, 'triangle');        
-        if(this.x < 0){
-            player.score += 1;
-        }
-        if(this.x > 600){
-            computer.score += 1;
-        }
+        beep(600, 1, 'triangle');
     }
 // Hit detection - ball to paddle
 
@@ -179,11 +178,6 @@ window.addEventListener("keyup", function(event) {
 delete keysDown[event.keyCode];
 });
 
-var update = function() {
-    player.update();
-    ball.update(player.paddle, computer.paddle);
-};
-
 Player.prototype.update = function () {
     for(var key in keysDown) {
         var value = Number(key);
@@ -211,13 +205,16 @@ Paddle.prototype.move = function(x, y){
     }
 }
 
-// Computer AI
+// Update the paddles and ball
 
 var update = function() {
     player.update();
     computer.update(ball);
     ball.update(player.paddle, computer.paddle);
+
 };
+
+// Computer AI
 
 Computer.prototype.update = function(ball) {
     var y_pos = ball.y;
