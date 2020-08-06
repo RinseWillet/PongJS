@@ -7,7 +7,8 @@ the game has been turned 90 degrees and colors matched to conform to classic 197
 4-8-2020 work completed:
 - centre line / net added
 - synthesizer added to make beep sounds
+5-8-2020
+- score keeping works(thx Koenek & RudiWN)
 
 to do:
-- add score
 - create reset / start button
