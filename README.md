@@ -12,6 +12,8 @@ the game has been turned 90 degrees and colors matched to conform to classic 197
 - score keeping works(thx Koenek & RudiWN)
 
 13-8-2020
+- screen enlarged to 1200 x 800 px
+- used the Bit5x3 font for classic characters (install from http://www.mattlag.com/bitfonts/) 
 - added 'startscreen' with press spacebar to start
 - added gameover if computer or player hits 10 points
 
