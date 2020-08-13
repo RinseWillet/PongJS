@@ -11,6 +11,10 @@ the game has been turned 90 degrees and colors matched to conform to classic 197
 5-8-2020
 - score keeping works(thx Koenek & RudiWN)
 
+13-8-2020
+- added 'startscreen' with press spacebar to start
+- added gameover if computer or player hits 10 points
+
 to do:
 - create reset / start button
 - style html file further
