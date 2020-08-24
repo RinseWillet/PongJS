@@ -3,24 +3,24 @@ var animate = window.requestAnimationFrame ||
     window.mozRequestAnimationFrame ||
     function (callback) { window.setTimeout(callback, 1000 / 60) };
 
-var canvas = document.createElement('canvas');
+var canvas = document.getElementById('myCanvas');
 var width = 1200;
 var height = 800;
 canvas.width = width;
 canvas.height = height;
 var context = canvas.getContext('2d');
 
-
-window.onload = function () {
+function startGame() {
     document.body.appendChild(canvas);
     startscreen();
-    onkeyup = function(e){
-        if(e.keyCode == 32){
+    onkeyup = function (e) {
+        if (e.keyCode == 32) {
+            computer.score = 0;
+            player.score=0;
             animate(step);
         }
     }
 }
-
 
 var step = function () {
     update();
@@ -105,7 +105,7 @@ var render = function () {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, width, height);
 
-    // Draw the net (Line in the middle)
+    // Net tekenen - Draw the net (Line in the middle)
     context.beginPath();
     context.setLineDash([7, 15]);
     context.moveTo(600, 0);
@@ -130,9 +130,12 @@ var render = function () {
     }
     if (player.score == 10) {
         context.fillText("Computer wins", 600, 400);
+        setTimeout(startGame, 3000);
+
     }
     if (computer.score == 10) {
         context.fillText("Player wins", 600, 400);
+        setTimeout(startGame, 3000);
     }
 };
 
@@ -173,7 +176,8 @@ Ball.prototype.update = function (paddle1, paddle2) {
         this.x = 600;
         beep(600, 1, 'triangle');
     }
-    // Hit detection - ball to paddle
+
+    // De bal raken met de rackets - Hit detection - ball to paddle
 
     if (top_x > 600) {
         if (top_x < (paddle1.x + paddle1.width) && bottom_x > paddle1.x && top_y < (paddle1.y + paddle1.height) && bottom_y > paddle1.y) {
@@ -234,7 +238,7 @@ Paddle.prototype.move = function (x, y) {
     }
 }
 
-// Update the paddles and ball
+// Paddles en bal updaten
 
 var update = function () {
     player.update();
@@ -243,7 +247,7 @@ var update = function () {
 
 };
 
-// Computer AI
+// Computer speler gedrag
 
 Computer.prototype.update = function (ball) {
     var y_pos = ball.y;
@@ -261,15 +265,16 @@ Computer.prototype.update = function (ball) {
     }
 };
 
-//Sound context - if you use another AudioContext class use that one, as some browsers have a limit
+
+//Geluidscontext - standaard AudioContext
 var audioCtx = new (window.AudioContext || window.webkitAudioContext || window.audioContext);
 
-//Synthesizer for sound (beeps):
+//Synthesizer voor geluid (beeps):
 
-//duration is set at 100 ms
-//frequency of the tone in hertz. default is 440
-//volume of the tone. Default is 1, off is 0.
-//type of tone. Possible values are sine, square, sawtooth, triangle, and custom. Default is sine.
+//standaard staat de tijdsduur (duration) op 100 ms
+//de frequentie (frequency) van de toon staat standaard op 440 hz
+//Het geluidsvolume (volume) staat standaard op 1, 0 is uit. 
+//De golfvorm (type) staat standaard op sinus (sine), andere opties zijn square, sawtooth, triangle, en custom.
 function beep(frequency, volume, type) {
     var oscillator = audioCtx.createOscillator();
     var gainNode = audioCtx.createGain();
@@ -285,9 +290,6 @@ function beep(frequency, volume, type) {
     oscillator.stop(audioCtx.currentTime + ((100) / 1000));
 };
 
-
-
-
-
-
-
+window.onload = function() {
+    startGame();
+}

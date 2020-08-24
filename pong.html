@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <script src="pong.js"></script>
-        </head>
-    <body>
-    <h1>Welcome to Pong</h1>
-    <button class = "play-again"></button>
-    </body>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <title>PongJS</title>
+  </head>
+  <body id="pong-background">
+    <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container" padding=auto>
+        <img src="./img/logo zonder achtergrond.png" class="center"/>
+      </div>
+    </nav>
+    <div class="container">
+      <div>
+        <h1 style="text-align:center">Welcome to 1972</h1>
+      </div>
+      <div>
+        <canvas id="myCanvas">
+          <script type="text/javascript" src="pong.js" async></script>
+        </canvas>
+      </div>
+    </div>
+    </div>
+  </body>
 </html>
