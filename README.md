@@ -17,6 +17,11 @@ the game has been turned 90 degrees and colors matched to conform to classic 197
 - added 'startscreen' with press spacebar to start
 - added gameover if computer or player hits 10 points
 
+23-8-2020
+
+- set the game in an html website and beginning of styling
+- game resets after score is 10 at either side
+
 to do:
 - create reset / start button
 - style html file further
