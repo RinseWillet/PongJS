@@ -1,15 +1,18 @@
+//animatie scherm en frames per second (60) klaarzetten
 var animate = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
     function (callback) { window.setTimeout(callback, 1000 / 60) };
 
-var canvas = document.getElementById('myCanvas');
+var canvas = document.querySelector("canvas");
 var width = 1200;
 var height = 800;
 canvas.width = width;
 canvas.height = height;
 var context = canvas.getContext('2d');
 
+
+//game starten - startscherm -> spelen na spatiebalk
 function startGame() {
     document.body.appendChild(canvas);
     startscreen();
@@ -22,6 +25,7 @@ function startGame() {
     }
 }
 
+//cyclus van animeren en updaten
 var step = function () {
     update();
     render();
@@ -95,7 +99,8 @@ var startscreen = function () {
     context.stroke();
 
     //press start to play
-    context.font = "100px Bit5x3";
+    
+    context.font = '100px Bit5x3';
     context.fillStyle = "white";
     context.textAlign = "center";
     context.fillText("press space to start", 600, 400);
@@ -115,8 +120,7 @@ var render = function () {
     context.stroke();
 
     // //printing scores
-    context.font = "100px Bit5x3";
-    context.font = ""
+    context.font = "100px Bit5x3";    
     context.fillStyle = "white";
     context.textAlign = "center";
     context.fillText(player.score.toString(), 300, 100);
@@ -166,12 +170,13 @@ Ball.prototype.update = function (paddle1, paddle2) {
     if (this.x < 0 || this.x > 1200) {
         if (this.x < 0) {
             computer.score += 1;
+            this.x_speed = -7;
         }
         if (this.x > 1200) {
             player.score += 1;
+            this.x_speed = 7;
         }
-        this.y_speed = 0;
-        this.x_speed = 7;
+        this.y_speed = 0;        
         this.y = 400;
         this.x = 600;
         beep(600, 1, 'triangle');
