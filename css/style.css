@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'GameFont';
+  font-style: normal;
+  font-weight: 400;
+  src: local('GameFont'),       
+       url("../font/PressStart2P-Regular.ttf") format('truetype');
+}
+
 body {  
   letter-spacing: 0.1em;
   color: #9b9b9b;
@@ -37,16 +45,26 @@ body {
   display: block;
 }
 
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'GameFont', cursive;
+  font-size: 32px;
+  color: black !important;
+  -webkit-text-stroke-width: 1px;  
+  -webkit-text-stroke-color: #ff0083;  
+  text-shadow: 5px 5px 10px #ff0083;
+  padding: 2% 2%;  
+}
+
 .navbar {
   background-color: black!important;
 }
 
-.navbar-brand {
-  color: white !important;
-}
-
-.navbar .nav-link {
-  color: white !important;
+.score {
+text-align: center;
+text-transform: uppercase;
+font-family: 'Press Start 2P', cursive;
 }
 
 footer {
