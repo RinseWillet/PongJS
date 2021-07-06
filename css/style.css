@@ -1,3 +1,35 @@
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  color: white;
+}
+
+body {  
+  min-height: 100vh;  
+  color: #9b9b9b;
+  background-image: url("../img/retro-background.png");
+  background-position: center; 
+  opacity: 0.75;
+  background-repeat: no-repeat;  
+  height: 100% !important;
+  width: 100% !important;
+  max-height: 100%;
+  max-width: 100%;
+  
+}
+
+.container {  
+  position: relative;  
+  align-items: center;
+  justify-content: center; 
+}
+
+/* font */
 @font-face {
   font-family: 'GameFont';
   font-style: normal;
@@ -6,82 +38,31 @@
        url("../font/PressStart2P-Regular.ttf") format('truetype');
 }
 
-body {  
-  letter-spacing: 0.1em;
-  color: #9b9b9b;
-}
-
-.container {
-  max-width: 200%;
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-
-#pong-background {
-  background-image: url("../img/retro-background.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100% !important;
-  width: 100% !important;
-  max-height: 100%;
-  max-width: 100%;
-  overflow-x: none;
-  opacity: 0.75;
-}
-
-#myCanvas {
-  max-width: 50%;
-  max-height:50%;
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: 25%;
-  margin-right: 25%;
-  display: block;
-}
-
-h1 {
+.title {
   text-align: center;
   text-transform: uppercase;
   font-family: 'GameFont', cursive;
-  font-size: 32px;
+  font-size: 3.2rem;
   color: black !important;
-  -webkit-text-stroke-width: 1px;  
+  -webkit-text-stroke-width: 0.1rem;  
   -webkit-text-stroke-color: #ff0083;  
-  text-shadow: 5px 5px 10px #ff0083;
+  text-shadow: 0.5rem 0.5rem 1rem #ff0083;
   padding: 2% 2%;  
 }
 
-.navbar {
-  background-color: black!important;
+.logo {
+  display:flex;
+  align-items: center;
+  justify-content: center;  
+  width: 50%;
+   
 }
 
-.score {
-text-align: center;
-text-transform: uppercase;
-font-family: 'Press Start 2P', cursive;
-}
-
-footer {
-  background-color: black;
-  color: white;
-  min-height: 200px;
-  padding: 175px 0px 25px 10px;
-}
-
-footer .container {
-  border-top: solid 1px white;
-}
-
-span {
-  padding-top: 50px;
-}
-
-main {
-  min-height: 80vh;
+#myCanvas {
+  position: relative;
+  display: flex;
+  max-width: 50%;
+  max-height: 50%;  
+  align-items: center;
+  justify-content: center;  
 }
