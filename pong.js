@@ -13,7 +13,6 @@ canvas.width = width;
 canvas.height = height;
 var context = canvas.getContext('2d');
 
-
 //game starten - startscherm -> spelen na spatiebalk
 const startGame = () => {
     document.body.appendChild(canvas);
@@ -74,10 +73,11 @@ class Player {
     }
     update = () => {
         for (var key in keysDown) {
-            var value = Number(key);
-            if (value == 38) { //left arrow - linkerpijl
+            var value = String(key);
+            console.log(value);
+            if (value == "ArrowUp") { //up arrow - moves paddle up
                 this.paddle.move(0, -6);
-            } else if (value == 40) { //right arrow - rechterpijl
+            } else if (value == "ArrowDown") { //down arrow - moves paddle down
                 this.paddle.move(0, 6);
             } else {
                 this.paddle.move(0, 0);
@@ -86,7 +86,7 @@ class Player {
     }
 }
 
-//class for the Computer player
+// class for the Computer player
 class Computer {
     constructor() {
         this.paddle = new Paddle(10, 375, 10, 50);
@@ -96,7 +96,7 @@ class Computer {
         this.paddle.render();
     }
 
-    // Computer speler gedrag
+    // Computer player behaviour
     update = (ball) => {
         var y_pos = ball.y;
         var diff = -((this.paddle.y + (this.paddle.height / 2)) - y_pos);
@@ -252,15 +252,17 @@ var update = () => {
     ball.update(player.paddle, computer.paddle);
 };
 
-//Controls - input and conversion to movement Player
+//Controls - input and conversion to movement Player - JSON to temporarily store the key-press event in.
 var keysDown = {};
 
 window.addEventListener("keydown", (event) => {
-    keysDown[event.keyCode] = true;
+    keysDown[event.code] = true,
+    console.log(keysDown)
 });
 
 window.addEventListener("keyup", (event) => {
-    delete keysDown[event.keyCode];
+    delete keysDown[event.code],
+    console.log(keysDown)
 });
 
 // Paddles en bal updaten
