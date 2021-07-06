@@ -18,10 +18,10 @@ var context = canvas.getContext('2d');
 const startGame = () => {
     document.body.appendChild(canvas);
     startscreen();
-    onkeyup = function (e) {
-        if (e.keyCode == 32) {
+    onkeyup = (e) => {
+        if (e.code == "Space") {
             computer.score = 0;
-            player.score=0;
+            player.score = 0;
             animate(step);
         }
     }
@@ -86,6 +86,7 @@ class Player {
     }
 }
 
+//class for the Computer player
 class Computer {
     constructor() {
         this.paddle = new Paddle(10, 375, 10, 50);
@@ -94,6 +95,7 @@ class Computer {
     render = () => {
         this.paddle.render();
     }
+
     // Computer speler gedrag
     update = (ball) => {
         var y_pos = ball.y;
@@ -161,7 +163,7 @@ class Ball {
             beep(600, 1, 'triangle');
         }
 
-        // De bal raken met de rackets - Hit detection - ball to paddle
+        // hitting the ball with the rackets - Hit detection - ball to paddle
         if (top_x > 600) {
             if (top_x < (paddle1.x + paddle1.width) && bottom_x > paddle1.x && top_y < (paddle1.y + paddle1.height) && bottom_y > paddle1.y) {
                 // hit detection player paddle / speler paddle raken
@@ -186,7 +188,7 @@ var player = new Player();
 var computer = new Computer();
 var ball = new Ball(600, 400);
 
-var startscreen = function () {
+var startscreen = () => {
     context.fillStyle = "#000000";
     context.fillRect(0, 0, width, height);
 
@@ -250,29 +252,23 @@ var update = () => {
     ball.update(player.paddle, computer.paddle);
 };
 
-
 //Controls - input and conversion to movement Player
-
 var keysDown = {};
 
-window.addEventListener("keydown", function (event) {
+window.addEventListener("keydown", (event) => {
     keysDown[event.keyCode] = true;
 });
 
-window.addEventListener("keyup", function (event) {
+window.addEventListener("keyup", (event) => {
     delete keysDown[event.keyCode];
 });
 
 // Paddles en bal updaten
-
-var update = function () {
+var update = () => {
     player.update();
     computer.update(ball);
     ball.update(player.paddle, computer.paddle);
-
 };
-
-
 
 //Geluidscontext - standaard AudioContext
 var audioCtx = new (window.AudioContext || window.webkitAudioContext || window.audioContext);
