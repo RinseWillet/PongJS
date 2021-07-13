@@ -5,7 +5,6 @@ var animate = window.requestAnimationFrame ||
     function (callback) {
          window.setTimeout(callback, 1000 / 60) 
     };
-
 var canvas = document.querySelector("canvas");
 var width = 1200;
 var height = 800;
