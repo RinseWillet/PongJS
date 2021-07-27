@@ -37,6 +37,13 @@ body {
   font-size: 2rem;  
 }
 
+/* load local font in project */
+@font-face {
+  font-family: 'Bit5x3';
+  src: url('../font/bit5x3.otf') format('opentype');
+}
+
+
 /* settings of the playfield */
 .playfield {
   padding: 0;

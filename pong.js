@@ -1,19 +1,22 @@
 //animatie scherm en frames per second (60) klaarzetten
-var animate = window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
+var animate = window.requestAnimationFrame ||  
     function (callback) {
          window.setTimeout(callback, 1000 / 60) 
     };
+
+// query selector returns the first HTML Element in the document that matches the selector (here: canvas) -> if no elements could be found, no 
 var canvas = document.querySelector("canvas");
 var width = 1200;
 var height = 800;
 canvas.width = width;
 canvas.height = height;
+
+// the getContext method returns a drawing context on the canvas - the identifier '2d' leads to the creation of a CanvasRenderingContext2d object (a 2d rendering context)
 var context = canvas.getContext('2d');
 
 //game starten - startscherm -> spelen na spatiebalk
 const startGame = () => {
+    //appendChild method adds a node to the end of the list of children to a specific node, in this case the variable canvas (an HTML element) is appended to the body upon starting the game after window is loaded
     document.body.appendChild(canvas);
     startscreen();
     onkeyup = (e) => {
@@ -46,6 +49,7 @@ class Paddle {
         context.fillStyle = "#FFFFFF";
         context.fillRect(this.x, this.y, this.width, this.height);
     }
+
     move = (x, y) => {
         this.x += x;
         this.y += y;
@@ -136,11 +140,11 @@ class Ball {
         var bottom_x = this.x + 7;
         var bottom_y = this.y + 7;
 
-        if (this.y - 7 < 0) { // bouncing of the top wall - bovenmuur raken
-            this.y = 7;
+        if (this.y - 5 < 0) { // bouncing of the top wall - bovenmuur raken
+            this.y = 5;
             this.y_speed = -this.y_speed;
             beep(300);
-        } else if (this.y + 7 > 800) { // bouncing of the bottom wall - rechtermuur raken
+        } else if (this.y + 5 > 800) { // bouncing of the bottom wall - rechtermuur raken
             this.y = 795;
             this.y_speed = -this.y_speed;
             beep(300);
