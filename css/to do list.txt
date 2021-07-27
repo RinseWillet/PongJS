@@ -1,0 +1,144 @@
+to do list
+1
+
+onkeyup = (e) => {
+        if (e.code == "Space") {
+            
+        }
+
+
+2 spatiebalk indrukken
+
+onkeyup = (e) => {
+        if (e.code == "Space") {
+          animate(step);  
+        }
+ 
+
+ 3 animationframe starten en fps instellen
+
+The window.requestAnimationFrame() method tells the browser that you wish to perform an animation and requests that the browser calls
+a specified function to update an animation before the next repaint.
+The method takes a callback as an argument to be invoked before the repaint.
+
+ //animatie scherm en frames per second (60) klaarzetten
+var animate = window.requestAnimationFrame ||    
+    
+    function (callback) {
+        //voert de callback uit na een specifiek aantal milliseconden -> 1000 / 60 is dus 60 frames per second
+         window.setTimeout(callback, 1000 / 60) 
+    };
+
+
+
+
+
+4 cyclus van animeren opstarten
+
+//cyclus van animeren en updaten
+var step = () => {    
+    render();
+};
+
+
+
+
+5 speelveld tekenen
+
+var playfield = () => {
+    //speelveld
+    context.fillStyle = "#000000";
+    context.fillRect(0, 0, width, height);
+
+    // Net tekenen - Draw the net (Line in the middle)
+    context.beginPath();
+    context.setLineDash([7, 15]);
+    context.moveTo(600, 0);
+    context.lineTo(600, 800);
+    context.lineWidth = 5;
+    context.strokeStyle = "#ffffff";
+    context.stroke(); 
+}
+
+var render = () => {
+    speelveld();
+};
+
+in functie startscreen:
+
+speelveld();
+
+
+
+
+6 tekenen ball
+
+class Ball {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;        
+        this.radius = 5;
+    }
+    render = () => {
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 2 * Math.PI, false);
+        context.fillStyle = "#FFFFFF";
+        context.fill();
+    }
+}
+
+var ball = new Ball(600, 400);
+
+in de function render: 
+
+ball.render();
+
+
+
+
+
+
+7 bal laten bewegen
+
+in functie render:
+animate(step);
+
+var update = () => {    
+    ball.update();
+};
+
+in de functie step:
+render();
+update();
+
+in class Ball:
+
+constructor: 
+this.x_speed = 7;
+this.y_speed = 0;
+
+update = () => {
+        this.x += this.x_speed;
+        this.y += this.y_speed;      
+        
+}
+
+
+8 stuiteren randen
+
+in class ball:
+
+this.y_speed = 7
+
+        //stuiteren tegen de bovenmuur en ondermuur regelen
+        if (this.y - 5 < 0) { // bouncing of the top wall - bovenmuur raken
+            this.y = 5;
+            this.y_speed = -this.y_speed;            
+        } else if (this.y + 5 > 800) { // bouncing of the bottom wall - rechtermuur raken
+            this.y = 795;
+            this.y_speed = -this.y_speed;            
+        }
+
+
+
+
